@@ -19,3 +19,10 @@ logs/
 # Tooling caches
 .antigravitycli
 .ruff_cache
+
+# Test coverage and caches
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+.pytest_cache/
