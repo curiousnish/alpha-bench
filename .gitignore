@@ -15,3 +15,4 @@ logs/
 
 .DS_Store
 .antigravitycli
+.ruff_cache
