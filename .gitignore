@@ -9,10 +9,13 @@ wheels/
 # Virtual environments
 .venv
 
-# Log files
+# Log files and runtime-generated directories
 *.log
 logs/
 
+# macOS artifacts
 .DS_Store
+
+# Tooling caches
 .antigravitycli
 .ruff_cache

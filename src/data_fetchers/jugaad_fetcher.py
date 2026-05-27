@@ -4,7 +4,7 @@ import pandas as pd
 from jugaad_data.nse import stock_df
 
 from src.config import BSE_SUFFIX, DEFAULT_NSE_SERIES, NSE_SUFFIX, STANDARD_OHLCV_COLUMNS
-from src.data_fetchers.yfinance_fetcher import ConnectionError, DataFetchError, TickerNotFoundError
+from src.exceptions import ConnectionError, DataFetchError, TickerNotFoundError
 from src.logger import get_logger
 
 

@@ -1,60 +1,60 @@
 # Alpha-Bench Data Ingestion Framework
 
-A premium, high-performance data ingestion framework designed to fetch, clean, and standardize historical OHLCV (Open, High, Low, Close, Volume) market data for the Indian Stock Market (NSE/BSE). Built using Python, modern dependency tooling (`uv`), and robust data fetchers integrated with custom aesthetic logging.
+A high-performance data ingestion framework for fetching, cleaning, and standardizing historical OHLCV (Open, High, Low, Close, Volume) market data for the Indian Stock Market (NSE/BSE). Built with Python, `uv` for dependency management, and a custom ANSI-coloured logging framework.
 
 ---
 
-## 🏗️ Architectural Blueprint
-
-The codebase is organized following strict domain-driven, modular packaging best practices:
+## 🏗️ Project Structure
 
 ```text
 alpha-bench/
-├── .venv/                      # Synced local Python virtual environment
-├── src/                        # Core codebase package
-│   ├── __init__.py             # Versioning and package metadata
-│   ├── config.py               # Global constants and DataFrame schemas
-│   ├── logger/                 # Native custom ANSI colored logging framework
-│   │   ├── __init__.py
-│   │   └── logger.py
+├── src/                        # Core library package
+│   ├── __init__.py             # Package version and metadata
+│   ├── config.py               # Global constants and DataFrame schema
+│   ├── exceptions.py           # Shared exception hierarchy (DataFetchError, etc.)
+│   ├── logger/                 # Custom ANSI-coloured logging framework
+│   │   ├── __init__.py         # Public API: setup_logging, get_logger
+│   │   └── _core.py            # Internal logger implementation
 │   └── data_fetchers/          # Resilient data fetching adapters
-│       ├── __init__.py         # Consolidated package API imports
-│       ├── yfinance_fetcher.py # Yahoo Finance adapter with suffix cleaning
-│       └── jugaad_fetcher.py   # NSE India adapter with date and index sorting
-├── tests/                      # Automated unit test suite
+│       ├── __init__.py         # Consolidated public API exports
+│       ├── yfinance_fetcher.py # Yahoo Finance adapter (auto-appends .NS suffix)
+│       └── jugaad_fetcher.py   # NSE India adapter via jugaad-data
+├── tests/                      # Automated unit test suite (offline, mocked)
 │   ├── __init__.py
 │   └── test_data_fetchers.py   # Mock-based Pytest specifications
-├── example/                    # Development scripts and usage demos
-│   ├── logger_usage.py         # Custom logging demonstration
-│   └── test_fetchers.py        # Integration test checking live APIs
-├── pyproject.toml              # Modern PEP-621 metadata & tool declarations
-└── README.md                   # Premium developer documentation
+├── scripts/                    # Developer utility scripts (not part of library API)
+│   ├── demo_logger.py          # ANSI logger output demonstration
+│   └── run_fetchers.py         # Live integration smoke-test (requires internet)
+├── pyproject.toml              # PEP-621 project metadata and tool configuration
+├── .pre-commit-config.yaml     # Pre-commit hooks (ruff lint + format)
+└── README.md
 ```
 
 ---
 
 ## ⚡ Getting Started
 
-This project utilizes `uv` by Astral for fast, reliable package management.
+This project uses [`uv`](https://github.com/astral-sh/uv) for fast, reliable dependency management.
 
 ### 1. Prerequisites
-Ensure you have `uv` installed on your machine. If not, install it using:
+
+Install `uv` if not already available:
 ```bash
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
 ### 2. Environment Setup
-Clone the repository and synchronize the environment (including development packages):
+
+Clone the repository and sync the virtual environment (including dev dependencies):
 ```bash
-# Sync dependencies and build virtual env
 uv sync
 ```
 
 ---
 
-## 📘 Quick Start Usage
+## 📘 Usage
 
-Both data fetchers are interchangeable and return a standardized `pandas.DataFrame` matching exactly the central schema defined in `src/config.py`.
+Both fetchers return a standardized `pandas.DataFrame` matching the schema defined in `src/config.py`.
 
 ### Fetching with `yfinance`
 
@@ -63,27 +63,21 @@ from datetime import datetime, timedelta
 from src.logger import setup_logging, get_logger
 from src.data_fetchers import fetch_yfinance_ohlcv
 
-# 1. Setup native styled logger
 setup_logging(default_level="INFO", console_output=True)
 logger = get_logger(__name__)
 
-# 2. Ingest Indian stock market data (cleaner auto-appends .NS)
 start_date = datetime.now() - timedelta(days=15)
 end_date = datetime.now()
 
 try:
-    df = fetch_yfinance_ohlcv(
-        ticker="TCS", 
-        start_date=start_date, 
-        end_date=end_date
-    )
+    df = fetch_yfinance_ohlcv(ticker="TCS", start_date=start_date, end_date=end_date)
     logger.info("Successfully fetched data!")
     print(df.head())
 except Exception as e:
     logger.error(f"Failed to fetch data: {e}")
 ```
 
-### Fetching from the NSE directly with `jugaad-data`
+### Fetching from NSE directly with `jugaad-data`
 
 ```python
 from datetime import date
@@ -94,55 +88,63 @@ setup_logging(default_level="INFO")
 logger = get_logger(__name__)
 
 try:
-    # also strips suffixes like .NS to fetch raw symbol "RELIANCE"
     df = fetch_jugaad_ohlcv(
         symbol="RELIANCE.NS",
         start_date=date(2026, 5, 1),
-        end_date=date(2026, 5, 20)
+        end_date=date(2026, 5, 20),
     )
-    logger.info("Successfully loaded data from NSE website!")
+    logger.info("Successfully loaded data from NSE!")
     print(df.head())
 except Exception as e:
-    logger.error(f"NSE Ingestion failed: {e}")
+    logger.error(f"NSE ingestion failed: {e}")
 ```
 
 ---
 
-## 🛡️ Exception Hierarchy & Data Mapping
+## 🛡️ Exception Hierarchy & Data Schema
 
-Both fetchers map underlying connection timeouts, missing pages, and invalid tickers onto a standard custom exception tree to ensure resilient downstream application pipelines.
+Exceptions are defined centrally in `src/exceptions.py` and shared across all fetcher adapters.
 
-### Standardized Schema Columns
+### Standardized Schema
 
-Every returned DataFrame contains:
-- **Index**: Named `Date` (a timezone-naive `DatetimeIndex` representing transaction days, sorted ascending).
-- **Columns**: `["Open", "High", "Low", "Close", "Volume"]`.
+Every returned DataFrame has:
+- **Index**: `Date` — a timezone-naive `DatetimeIndex`, sorted ascending.
+- **Columns**: `["Open", "High", "Low", "Close", "Volume"]`
 
-### Resilient Error Mapping
+### Exception Reference
 
 | Exception | Raised When |
 | :--- | :--- |
-| `TickerNotFoundError` | The requested ticker does not exist, is delisted, or has no history. |
-| `ConnectionError` | The internet is down, or rate-limiting/timeouts are triggered by target API. |
-| `DataFetchError` | Base package exception for generic parser failures or schema issues. |
+| `DataFetchError` | Base exception; generic parser failures or schema issues. |
+| `TickerNotFoundError` | Ticker is invalid, delisted, or has no history. |
+| `ConnectionError` | Network is down, rate-limited, or API timed out. |
 
 ---
 
-## 🧪 Quality Control & Testing
+## 🧪 Testing & Quality
 
-### 1. Running Unit Tests
-A full, fast unit test suite with mock objects handles validating formatting and exception states without needing active internet connections:
+### Unit Tests (offline, mocked)
+
 ```bash
-# Run pytest with coverage reporter
-PYTHONPATH=. uv run pytest tests/ --cov=src
+# Run full test suite with coverage
+uv run pytest tests/ --cov=src -v
 ```
 
-### 2. Linting & Formatting
-The codebase is validated against modern styling rules using Ruff:
-```bash
-# Run the linter
-uv run ruff check src/
+> No `PYTHONPATH=.` prefix needed — configured via `[tool.pytest.ini_options]` in `pyproject.toml`.
 
-# Run the formatter
-uv run ruff format src/
+### Linting & Formatting
+
+```bash
+uv run ruff check src/ tests/ scripts/
+uv run ruff format src/ tests/ scripts/
+```
+
+### Developer Scripts
+
+```bash
+# Demonstrate the custom logger output
+uv run python scripts/demo_logger.py
+
+# Live integration smoke-test (requires internet, hits real NSE/Yahoo APIs)
+uv run python scripts/run_fetchers.py
 ```

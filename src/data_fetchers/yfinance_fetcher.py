@@ -4,28 +4,11 @@ import pandas as pd
 import yfinance as yf
 
 from src.config import BSE_SUFFIX, DEFAULT_INTERVAL, NSE_SUFFIX, STANDARD_OHLCV_COLUMNS
+from src.exceptions import ConnectionError, DataFetchError, TickerNotFoundError
 from src.logger import get_logger
 
 
 logger = get_logger(__name__)
-
-
-class DataFetchError(Exception):
-    """Base exception for data fetching operations."""
-
-    pass
-
-
-class TickerNotFoundError(DataFetchError):
-    """Raised when a requested ticker cannot be found or is invalid."""
-
-    pass
-
-
-class ConnectionError(DataFetchError):
-    """Raised when there is a network or connectivity issue."""
-
-    pass
 
 
 def clean_indian_ticker(ticker: str) -> str:

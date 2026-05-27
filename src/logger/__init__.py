@@ -1,3 +1,4 @@
-from src.logger.logger import get_logger, setup_logging
+from src.logger._core import get_logger, setup_logging
+
 
 __all__ = ["setup_logging", "get_logger"]
