@@ -1,0 +1,10 @@
+artifact_location: file:///home/nish/Code/alpha-bench/mlruns/923712563960782630/models/m-f762105446ab4f8dbbe655a7920dcd0e/artifacts
+creation_timestamp: 1780222137648
+experiment_id: '923712563960782630'
+last_updated_timestamp: 1780222137814
+model_id: m-f762105446ab4f8dbbe655a7920dcd0e
+model_type: null
+name: model
+source_run_id: 1f08494dc4724a93b27b2b7666cb7f07
+status: 2
+status_message: null

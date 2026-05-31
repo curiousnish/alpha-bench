@@ -1,0 +1,8 @@
+artifact_location: file:///home/nish/Code/alpha-bench/mlruns/348531852493116050
+creation_time: 1780221258192
+experiment_id: '348531852493116050'
+last_update_time: 1780221258192
+lifecycle_stage: active
+name: test_decorator_failure_exp
+trace_location: null
+workspace: default

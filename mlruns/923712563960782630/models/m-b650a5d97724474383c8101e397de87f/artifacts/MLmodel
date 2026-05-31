@@ -1,0 +1,23 @@
+artifact_path: file:///home/nish/Code/alpha-bench/mlruns/923712563960782630/models/m-b650a5d97724474383c8101e397de87f/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.13.13
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.8.0
+    skops_trusted_types: null
+mlflow_version: 3.12.0
+model_id: m-b650a5d97724474383c8101e397de87f
+model_size_bytes: 28505
+model_uuid: m-b650a5d97724474383c8101e397de87f
+prompts: null
+run_id: 2ae167326f1f47db940310ee82666e57
+utc_time_created: '2026-05-31 09:55:02.377462'

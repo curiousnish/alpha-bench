@@ -1,0 +1,54 @@
+{
+    "shape": [
+        3,
+        3
+    ],
+    "columns": [
+        "Open",
+        "Close",
+        "Volume"
+    ],
+    "index_name": "Date",
+    "dtypes": {
+        "Open": "float64",
+        "Close": "float64",
+        "Volume": "int64"
+    },
+    "null_counts": {
+        "Open": 0,
+        "Close": 0,
+        "Volume": 0
+    },
+    "describe": {
+        "Open": {
+            "count": 3.0,
+            "mean": 101.0,
+            "std": 1.0,
+            "min": 100.0,
+            "25%": 100.5,
+            "50%": 101.0,
+            "75%": 101.5,
+            "max": 102.0
+        },
+        "Close": {
+            "count": 3.0,
+            "mean": 102.0,
+            "std": 1.0,
+            "min": 101.0,
+            "25%": 101.5,
+            "50%": 102.0,
+            "75%": 102.5,
+            "max": 103.0
+        },
+        "Volume": {
+            "count": 3.0,
+            "mean": 1100.0,
+            "std": 100.0,
+            "min": 1000.0,
+            "25%": 1050.0,
+            "50%": 1100.0,
+            "75%": 1150.0,
+            "max": 1200.0
+        }
+    }
+}

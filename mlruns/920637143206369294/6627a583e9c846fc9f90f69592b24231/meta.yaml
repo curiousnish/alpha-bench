@@ -1,0 +1,14 @@
+artifact_uri: file:///home/nish/Code/alpha-bench/mlruns/920637143206369294/6627a583e9c846fc9f90f69592b24231/artifacts
+end_time: 1780221258214
+entry_point_name: ''
+experiment_id: '920637143206369294'
+lifecycle_stage: active
+run_id: 6627a583e9c846fc9f90f69592b24231
+run_name: stately-deer-269
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1780221258206
+status: 3
+tags: []
+user_id: nish

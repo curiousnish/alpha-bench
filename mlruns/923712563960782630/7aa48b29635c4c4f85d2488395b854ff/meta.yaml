@@ -1,0 +1,14 @@
+artifact_uri: file:///home/nish/Code/alpha-bench/mlruns/923712563960782630/7aa48b29635c4c4f85d2488395b854ff/artifacts
+end_time: 1780221306749
+entry_point_name: ''
+experiment_id: '923712563960782630'
+lifecycle_stage: active
+run_id: 7aa48b29635c4c4f85d2488395b854ff
+run_name: Trial_1_n25_d3
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1780221306386
+status: 3
+tags: []
+user_id: nish

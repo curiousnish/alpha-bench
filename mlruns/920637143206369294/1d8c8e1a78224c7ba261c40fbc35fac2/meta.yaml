@@ -1,0 +1,14 @@
+artifact_uri: file:///home/nish/Code/alpha-bench/mlruns/920637143206369294/1d8c8e1a78224c7ba261c40fbc35fac2/artifacts
+end_time: 1780221266520
+entry_point_name: ''
+experiment_id: '920637143206369294'
+lifecycle_stage: active
+run_id: 1d8c8e1a78224c7ba261c40fbc35fac2
+run_name: flawless-ram-203
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1780221266514
+status: 3
+tags: []
+user_id: nish

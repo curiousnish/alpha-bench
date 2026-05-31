@@ -1,0 +1,14 @@
+artifact_uri: file:///home/nish/Code/alpha-bench/mlruns/923712563960782630/28e9c92adef848cebe677460be297f3e/artifacts
+end_time: 1780221331230
+entry_point_name: ''
+experiment_id: '923712563960782630'
+lifecycle_stage: active
+run_id: 28e9c92adef848cebe677460be297f3e
+run_name: Stock_Direction_Classifier_Parent
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1780221329300
+status: 3
+tags: []
+user_id: nish
